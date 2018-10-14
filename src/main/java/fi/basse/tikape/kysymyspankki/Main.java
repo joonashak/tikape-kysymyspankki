@@ -8,14 +8,14 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 public class Main {
     
-    public static void main(String[] args) throws Exception {
-        
-        // Public resources (css)
-        Spark.staticFileLocation("/public");
-        
-        Spark.get("/", (req, res) -> {
-            HashMap model = new HashMap();
-            return ModelAndView.createView("questions", model);
-        }, new ThymeleafTemplateEngine());
-    }
+  public static void main(String[] args) throws Exception {
+
+    // Public resources (css)
+    Spark.staticFileLocation("/public");
+
+    Spark.get("/", (req, res) -> {
+      HashMap model = new HashMap();
+      return ModelAndView.createView("questions", model);
+    }, new ThymeleafTemplateEngine());
+  }
 }
