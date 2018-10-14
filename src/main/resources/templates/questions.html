@@ -1,8 +1,8 @@
-<div th:if="${questions.size() == 0}" class="alert alert-danger">
+<div th:if="${questions.size() == 0}" class="alert alert-danger shadow-sm">
   No questions in database. <a href="/add">Add one.</a>
 </div>
 
-<div class="accordion" id="question-list">
+<div class="accordion shadow-sm" id="question-list">
   
   <div th:each="question : ${questions}" class="card">
     <!-- Card header -->
