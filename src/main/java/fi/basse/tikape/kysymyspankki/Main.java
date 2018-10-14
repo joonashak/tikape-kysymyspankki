@@ -22,6 +22,8 @@ public class Main {
     
     Spark.get("/", (req, res) -> {
       HashMap model = new HashMap();
+      model.put("questions", questionDao.findAll());
+      
       return ModelAndView.createView("questions", model);
     }, new ThymeleafTemplateEngine());
   }

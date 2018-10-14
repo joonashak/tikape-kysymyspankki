@@ -18,7 +18,7 @@ public class QuestionDao extends Dao {
   public List<Question> findAll() throws SQLException {
     Connection conn = super.getConnection();
     
-    String sql = "SELECT Question.*, AnswerOption.id AS answeroption_id, AnswerOption.body, AnswerOption.correct FROM Question INNER JOIN AnswerOption ON AnswerOption.question_id = Question.id";
+    String sql = "SELECT Question.*, AnswerOption.id AS answeroption_id, AnswerOption.body AS answeroption_body, AnswerOption.correct FROM Question INNER JOIN AnswerOption ON AnswerOption.question_id = Question.id";
     PreparedStatement stmt = conn.prepareStatement(sql);
     ResultSet rs = stmt.executeQuery();
     
@@ -47,7 +47,7 @@ public class QuestionDao extends Dao {
       // Add answer option
       question.addAnswerOption(new AnswerOption(
               rs.getInt("answeroption_id"),
-              rs.getString("body"),
+              rs.getString("answeroption_body"),
               rs.getBoolean("correct")
         ));
     }
