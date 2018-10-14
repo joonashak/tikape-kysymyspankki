@@ -1,3 +1,13 @@
-.container {
-  margin-top: 65px;
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.text-muted {
+  color: #b0b7bd;
+}
+
+.text-muted a {
+  color: #6fb5ff;
 }
