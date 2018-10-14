@@ -1,5 +1,6 @@
 package fi.basse.tikape.kysymyspankki;
 
+import fi.basse.tikape.kysymyspankki.database.Database;
 import fi.basse.tikape.kysymyspankki.ui.ModelAndView;
 import java.util.HashMap;
 import spark.Spark;
@@ -12,6 +13,10 @@ public class Main {
 
     // Public resources (css)
     Spark.staticFileLocation("/public");
+    
+    // Database access
+    Database db = new Database();
+    db.getConnection();
 
     Spark.get("/", (req, res) -> {
       HashMap model = new HashMap();
