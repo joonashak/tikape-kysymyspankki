@@ -55,4 +55,47 @@ public class QuestionDao extends Dao {
     super.close(rs, stmt);
     return questions;
   }
+  
+  public List<String> getCourses() throws SQLException {
+    Connection conn = super.getConnection();
+
+    // Find unique course names
+    String sql = "SELECT DISTINCT coursename FROM Question";
+    PreparedStatement stmt = conn.prepareStatement(sql);
+    ResultSet rs = stmt.executeQuery();
+    
+    // Build results
+    List<String> courses = new ArrayList<>();
+    
+    while (rs.next()) {
+      courses.add(rs.getString("coursename"));
+    }
+    
+    super.close(rs, stmt);
+    return courses;
+  }
+  
+  // The question to be saved must include the correct answer as the only answer
+  public void save(Question question) throws SQLException {
+    // TODO: data validation
+    
+    // Save question
+    Connection conn = super.getConnection();
+    String sql = "INSERT INTO Question (coursename, title, body) VALUES (?,?,?) RETURNING id";
+    PreparedStatement stmt = conn.prepareStatement(sql);
+    stmt.setString(1, question.getCourseName());
+    stmt.setString(2, question.getTitle());
+    stmt.setString(3, question.getBody());
+
+    ResultSet rs = stmt.executeQuery();
+    
+    // Save answer
+    rs.next();
+    Integer id = rs.getInt("id");
+    AnswerOption ao = (AnswerOption) question.getAnswerOptions().get(0);
+    AnswerOptionDao aoDao = new AnswerOptionDao(super.getDb());
+    aoDao.save(ao, id);
+    
+    super.close(rs, stmt);
+  }
 }

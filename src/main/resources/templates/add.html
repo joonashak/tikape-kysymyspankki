@@ -1,0 +1,49 @@
+<h3 class="mb-5">
+  Add New Question
+</h3>
+
+<form action="/add" method="POST">
+  <div class="form-group">
+    <label for="title">
+      Title
+    </label>
+    <input type="text" class="form-control" id="title" name="title" placeholder="General subject area of the question..." />
+  </div>
+  
+  <div class="form-group">
+    <label for="question">
+      Question
+    </label>
+    <input type="text" class="form-control" id="question" name="question" placeholder="Question text..." />
+  </div>
+  
+  <div class="form-row">
+    <div class="form-group col">
+      <label for="course">
+        Select an existing course...
+      </label>
+      <select class="form-control" id="course" name="course">
+        <option value="" disabled selected>Select Course</option>
+        <option th:each="course : ${courses}" th:value="${course}" th:utext="${course}"></option>
+      </select>
+    </div>
+
+    <div class="form-group col">
+      <label for="newCourse">
+        ...or create a new one
+      </label>
+      <input type="text" class="form-control" id="newCourse" name="newCourse" placeholder="Course Name" />
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="answer">
+      Correct Answer
+    </label>
+    <input type="text" class="form-control" id="answer" name="answer" placeholder="Give the correct answer to the question, other options are added after creation..." />
+  </div>
+  
+  <div class="form-group mt-5">
+    <input type="submit" value="Create" class="btn btn-primary" />
+  </div>
+</form>

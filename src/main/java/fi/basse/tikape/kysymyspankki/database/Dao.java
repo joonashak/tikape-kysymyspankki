@@ -18,6 +18,10 @@ public class Dao {
     this.conn = db.getConnection();
     return this.conn;
   }
+
+  public Database getDb() {
+    return this.db;
+  }
   
   public final void close(ResultSet rs, PreparedStatement stmt)
           throws SQLException {
