@@ -19,7 +19,6 @@
       <!-- Collapsible part -->
       <div th:class="${'collapse collapse-' + question.id}" th:attr="data-parent=${'#question-list-' + row.index}">
         <div class="card-body ml-4">
-          <p th:utext="${question.courseName}"></p>
           <p th:utext="${question.body}" />
           <ul class="mb-0">
             <li th:each="ao : ${question.answerOptions}" th:utext="${ao.body}" />
