@@ -4,17 +4,18 @@ import fi.basse.tikape.kysymyspankki.database.Database;
 import fi.basse.tikape.kysymyspankki.database.QuestionDao;
 import fi.basse.tikape.kysymyspankki.domain.AnswerOption;
 import fi.basse.tikape.kysymyspankki.domain.Question;
-import static fi.basse.tikape.kysymyspankki.ui.ModelAndView.createView;
+import static fi.basse.tikape.kysymyspankki.ui.Renderer.render;
 import java.sql.SQLException;
 import java.util.HashMap;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 public class QuestionController {
     
     // List all questions
-    public static ModelAndView listQuestions(Request req, Response res) throws SQLException {
+    public static String listQuestions(Request req, Response res) throws SQLException {
       Database db = new Database();
       QuestionDao questionDao = new QuestionDao(db);
       
@@ -22,23 +23,24 @@ public class QuestionController {
       model.put("courses", questionDao.getCourses());
       model.put("questions", questionDao.findAll());
 
+      ThymeleafTemplateEngine tte = new ThymeleafTemplateEngine();
       
-      return createView("questions", model);
+      return render("questions", model);
     }
     
     // Show form for adding a new question
-    public static ModelAndView formNew(Request req, Response res) throws SQLException {
+    public static String formNew(Request req, Response res) throws SQLException {
       Database db = new Database();
       QuestionDao questionDao = new QuestionDao(db);
       
       HashMap model = new HashMap();
       model.put("courses", questionDao.getCourses());
       
-      return createView("add", model);
+      return render("add", model);
     }
     
     // Create a new question
-    public static ModelAndView saveQuestion(Request req, Response res) throws SQLException {
+    public static String saveQuestion(Request req, Response res) throws SQLException {
       Database db = new Database();
       QuestionDao questionDao = new QuestionDao(db);
       
