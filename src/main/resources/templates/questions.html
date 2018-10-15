@@ -2,25 +2,32 @@
   No questions in database. <a href="/add">Add one.</a>
 </div>
 
-<div class="accordion shadow-sm" id="question-list">
+<div th:each="course, row : ${courses}">
   
-  <div th:each="question : ${questions}" class="card">
-    <!-- Card header -->
-    <div class="card-header" data-toggle="collapse" th:attr="data-target=${'.collapse-' + question.id}">
-      <h5 th:utext="${'Question #' + question.id + ': ' + question.title}" class="mb-0 btn btn-link" />
-      <button th:class="${'btn btn-danger float-right collapse collapse-' + question.id}" data-parent="#question-list" type="button">Remove</button>
-      <button th:class="${'btn btn-primary float-right mr-2 collapse collapse-' + question.id}" data-parent="#question-list" type="button">Edit</button>
-    </div>
-    
-    <!-- Collapsible part -->
-    <div th:class="${'collapse collapse-' + question.id}" data-parent="#question-list">
-      <div class="card-body ml-4">
-        <p th:utext="${question.body}" />
-        <ul class="mb-0">
-          <li th:each="ao : ${question.answerOptions}" th:utext="${ao.body}" />
-        </ul>
+  <h4 th:utext="${course}" class="mt-5 mb-4 ml-3" />
+
+  <div class="accordion shadow-sm" th:id="${'question-list-' + row.index}">
+
+    <div th:each="question : ${questions}" th:if="${question.courseName.equals(course)}" class="card">
+      <!-- Card header -->
+      <div class="card-header" data-toggle="collapse" th:attr="data-target=${'.collapse-' + question.id}">
+        <h5 th:utext="${'Question #' + question.id + ': ' + question.title}" class="mb-0 btn btn-link" />
+        <button th:class="${'btn btn-danger float-right collapse collapse-' + question.id}" th:attr="data-parent=${'#question-list-' + row.index}" type="button">Remove</button>
+        <button th:class="${'btn btn-primary float-right mr-2 collapse collapse-' + question.id}" th:attr="data-parent=${'#question-list-' + row.index}" type="button">Edit</button>
+      </div>
+
+      <!-- Collapsible part -->
+      <div th:class="${'collapse collapse-' + question.id}" th:attr="data-parent=${'#question-list-' + row.index}">
+        <div class="card-body ml-4">
+          <p th:utext="${question.courseName}"></p>
+          <p th:utext="${question.body}" />
+          <ul class="mb-0">
+            <li th:each="ao : ${question.answerOptions}" th:utext="${ao.body}" />
+          </ul>
+        </div>
       </div>
     </div>
+
   </div>
-    
+  
 </div>

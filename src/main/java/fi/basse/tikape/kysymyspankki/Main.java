@@ -6,6 +6,7 @@ import fi.basse.tikape.kysymyspankki.domain.AnswerOption;
 import fi.basse.tikape.kysymyspankki.domain.Question;
 import fi.basse.tikape.kysymyspankki.ui.ModelAndView;
 import java.util.HashMap;
+import java.util.List;
 import spark.Spark;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
@@ -25,6 +26,7 @@ public class Main {
     // List all questions
     Spark.get("/", (req, res) -> {
       HashMap model = new HashMap();
+      model.put("courses", questionDao.getCourses());
       model.put("questions", questionDao.findAll());
       
       return ModelAndView.createView("questions", model);

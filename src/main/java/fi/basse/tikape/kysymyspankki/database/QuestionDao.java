@@ -60,7 +60,7 @@ public class QuestionDao extends Dao {
     Connection conn = super.getConnection();
 
     // Find unique course names
-    String sql = "SELECT DISTINCT coursename FROM Question";
+    String sql = "SELECT DISTINCT coursename FROM Question ORDER BY coursename DESC";
     PreparedStatement stmt = conn.prepareStatement(sql);
     ResultSet rs = stmt.executeQuery();
     
