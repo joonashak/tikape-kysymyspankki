@@ -46,8 +46,8 @@ public class QuestionController {
       // Gather POST data
       String[] keys = {"title", "body", "answer", "course", "newCourse"};
       Map<String, String> data = paramMap(req, keys);
-
-      if (data.get("course").trim().length() == 0) {
+      
+      if (data.get("course") == null) {
         data.put("course", data.get("newCourse"));
       }
             
@@ -55,12 +55,16 @@ public class QuestionController {
       // Validate data and display errors, if present
       Map<String, Boolean> validation = validate(data);
       validation.remove("newCourse");
-      
+
       if (validation.containsValue(false)) {
         HashMap model = new HashMap();
         model.put("data", data);
         model.put("validation", validation);
         model.put("courses", questionDao.getCourses());
+
+        HashMap message = new HashMap();
+        message.put("error", "Check that you have filled all necessary fields.");
+        model.put("message", message);
         
         return render("add", model);
       }
