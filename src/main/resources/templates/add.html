@@ -2,6 +2,11 @@
   Add New Question
 </h3>
 
+<div th:if="${message.error}" class="alert alert-danger inline-alert">
+  <h5>Error!</h5>
+  <p th:utext="${message.error}" class="mb-0" />
+</div>
+
 <form action="/add" method="POST">
   <div class="form-group">
     <label for="title">

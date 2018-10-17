@@ -16,3 +16,9 @@ footer {
 .text-muted a {
   color: #6fb5ff;
 }
+
+.inline-alert {
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+}
