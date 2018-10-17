@@ -10,14 +10,14 @@ public class Renderer {
   public static String render(String viewName, Map model) {
     model.put("viewName", viewName);
     
-    // Add empty maps for data and message, if none exists.
+    // Add empty maps, if necessary.
     // Avoids creating empty maps in controllers.
-    if (!model.containsKey("data")) {
-      model.put("data", new HashMap());
-    }
+    String[] keys = {"data", "message", "validation"};
     
-    if (!model.containsKey("message")) {
-      model.put("message", new HashMap());
+    for (String key : keys) {
+      if (!model.containsKey(key)) {
+        model.put(key, new HashMap());
+      }
     }
     
     ModelAndView mv = new spark.ModelAndView(model, "fragments/template");

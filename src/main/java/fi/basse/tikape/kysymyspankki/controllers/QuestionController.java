@@ -35,9 +35,6 @@ public class QuestionController {
       HashMap model = new HashMap();
       model.put("courses", questionDao.getCourses());
       
-      HashMap validation = new HashMap();
-      model.put("validation", validation);
-      
       return render("add", model);
     }
     
