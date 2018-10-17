@@ -7,14 +7,30 @@
     <label for="title">
       Title
     </label>
-    <input type="text" class="form-control shadow-sm" id="title" name="title" placeholder="General subject area of the question..." />
+    <input
+      th:value="${data.title}"
+      th:classappend="${validation.size() > 0 && !validation.title ? 'is-invalid' : null}"
+      type="text"
+      class="form-control shadow-sm"
+      id="title"
+      name="title"
+      placeholder="General subject area of the question..."
+     />
   </div>
   
   <div class="form-group">
     <label for="question">
       Question
     </label>
-    <input type="text" class="form-control shadow-sm" id="question" name="question" placeholder="Question text..." />
+    <input
+      th:value="${data.body}"
+      th:classappend="${validation.size() > 0 && !validation.body ? 'is-invalid' : null}"
+      type="text"
+      class="form-control shadow-sm"
+      id="body"
+      name="body"
+      placeholder="Question text..."
+     />
   </div>
   
   <div class="form-row">
@@ -22,9 +38,25 @@
       <label for="course">
         Select an existing course...
       </label>
-      <select class="form-control shadow-sm" id="course" name="course">
-        <option value="" disabled selected>Select Course</option>
-        <option th:each="course : ${courses}" th:value="${course}" th:utext="${course}"></option>
+      <select
+        th:classappend="${validation.size() > 0 && !validation.course ? 'is-invalid' : null}"
+        class="form-control shadow-sm"
+        id="course"
+        name="course"
+       >
+        <option
+          th:selected="${!data.course}"
+          value=""
+          disabled
+         >
+          Select Course
+        </option>
+        <option
+          th:each="course : ${courses}"
+          th:value="${course}"
+          th:utext="${course}"
+          th:selected="${course.equals(data.course)}"
+         ></option>
       </select>
     </div>
 
@@ -32,7 +64,15 @@
       <label for="newCourse">
         ...or create a new one
       </label>
-      <input type="text" class="form-control shadow-sm" id="newCourse" name="newCourse" placeholder="Course Name" />
+      <input
+        th:value="${data.newCourse}"
+        th:classappend="${validation.size() > 0 && !validation.course ? 'is-invalid' : null}"
+        type="text"
+        class="form-control shadow-sm"
+        id="newCourse"
+        name="newCourse"
+        placeholder="Course Name"
+       />
     </div>
   </div>
   
@@ -40,7 +80,15 @@
     <label for="answer">
       Correct Answer
     </label>
-    <input type="text" class="form-control shadow-sm" id="answer" name="answer" placeholder="Give the correct answer to the question, other options are added after creation..." />
+    <input
+      th:value="${data.answer}"
+      th:classappend="${validation.size() > 0 && !validation.answer ? 'is-invalid' : null}"
+      type="text"
+      class="form-control shadow-sm"
+      id="answer"
+      name="answer"
+      placeholder="Give the correct answer to the question, other options are added after creation..."
+     />
   </div>
   
   <div class="form-group mt-5">
