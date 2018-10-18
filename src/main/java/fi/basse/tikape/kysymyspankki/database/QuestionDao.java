@@ -111,8 +111,6 @@ public class QuestionDao extends Dao {
   
   // The question to be saved must include the correct answer as the only answer
   public void save(Question question) throws SQLException {
-    // TODO: data validation
-    
     // Save question
     Connection conn = super.getConnection();
     String sql = "INSERT INTO Question (coursename, title, body) VALUES (?,?,?) RETURNING id";
@@ -131,5 +129,18 @@ public class QuestionDao extends Dao {
     aoDao.save(ao, id);
     
     super.close(rs, stmt);
+  }
+  
+  // Update question
+  public void update(Question question) throws SQLException {
+    Connection conn = super.getConnection();
+    String sql = "UPDATE Question SET coursename = ?, title = ?, body = ? WHERE id = ?";
+    PreparedStatement stmt = conn.prepareStatement(sql);
+    stmt.setString(1, question.getCourse());
+    stmt.setString(2, question.getTitle());
+    stmt.setString(3, question.getBody());
+    stmt.setInt(4, question.getId());
+    
+    stmt.executeUpdate();
   }
 }

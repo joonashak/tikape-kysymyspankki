@@ -22,6 +22,7 @@ public class Main {
     post("/question/add", QuestionController::saveQuestion);
     
     get("/question/edit/:id", QuestionController::formEdit);
+    post("/question/edit", QuestionController::updateQuestion);
     
     // Error handling
     notFound(ExceptionController::notFound);

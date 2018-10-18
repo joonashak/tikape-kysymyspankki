@@ -2,6 +2,11 @@
   No questions in database. <a href="/add">Add one.</a>
 </div>
 
+<div th:if="${message.success}" class="alert alert-success inline-alert shadow-sm">
+  <h5>Success!</h5>
+  <p th:utext="${message.success}" class="mb-0" />
+</div>
+
 <div th:each="course, row : ${courses}">
   
   <h4 th:utext="${course}" class="mt-5 mb-4 ml-3" />

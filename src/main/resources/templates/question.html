@@ -3,12 +3,12 @@
   class="mb-5"
 />
 
-<div th:if="${message.error}" class="alert alert-danger inline-alert">
+<div th:if="${message.error}" class="alert alert-danger inline-alert shadow-sm">
   <h5>Error!</h5>
   <p th:utext="${message.error}" class="mb-0" />
 </div>
 
-<form action="/question/add" method="POST">
+<form th:action="${edit ? '/question/edit' : '/question/add'}" method="POST">
   <div class="form-group">
     <label for="title">
       Title
@@ -112,6 +112,9 @@
       class="btn btn-primary shadow-sm"
     />
   </div>
+  
+  <!--/* ID */-->
+  <input type="hidden" name="id" th:value="${data.id}" />
 </form>
   
 <!--/* When editing, show all answer options  */-->
@@ -126,7 +129,7 @@
 
   <div class="list-group">
     <a
-      th:each="ao : ${data.answerOptions}"
+      th:each="ao : ${answerOptions}"
       th:href="|/answeroption/edit/${ao.id}|"
       class="list-group-item list-group-item-action"
     >
