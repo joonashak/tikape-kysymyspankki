@@ -35,7 +35,7 @@ public class QuestionController {
       HashMap model = new HashMap();
       model.put("courses", questionDao.getCourses());
       
-      return render("add", model);
+      return render("question", model);
     }
     
     // Create a new question
@@ -66,7 +66,7 @@ public class QuestionController {
         message.put("error", "Check that you have filled all necessary fields.");
         model.put("message", message);
         
-        return render("add", model);
+        return render("question", model);
       }
       
       Question question = new Question(
@@ -80,5 +80,19 @@ public class QuestionController {
       questionDao.save(question);
       
       return null;
+    }
+    
+    // Form to edit question and answer options
+    public static String formEdit(Request req, Response res) throws SQLException {
+      Database db = new Database();
+      QuestionDao questionDao = new QuestionDao(db);
+      
+      HashMap model = new HashMap();
+      int id = Integer.parseInt(req.params("id"));
+      model.put("data", questionDao.findOne(id));
+      model.put("courses", questionDao.getCourses());
+      model.put("edit", true);
+      
+      return render("question", model);
     }
 }

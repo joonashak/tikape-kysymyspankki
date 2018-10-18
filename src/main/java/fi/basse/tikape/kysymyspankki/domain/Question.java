@@ -6,14 +6,14 @@ import java.util.List;
 public class Question {
   
   private Integer id;
-  private String courseName;
+  private String course;
   private String title;
   private String body;
   private List answerOptions;
 
   public Question(Integer id, String courseName, String title, String body) {
     this.id = id;
-    this.courseName = courseName;
+    this.course = courseName;
     this.title = title;
     this.body = body;
     this.answerOptions = new ArrayList();
@@ -23,8 +23,8 @@ public class Question {
     return id;
   }
 
-  public String getCourseName() {
-    return courseName;
+  public String getCourse() {
+    return course;
   }
 
   public String getTitle() {

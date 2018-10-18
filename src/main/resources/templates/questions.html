@@ -8,12 +8,35 @@
 
   <div class="accordion shadow-sm" th:id="${'question-list-' + row.index}">
 
-    <div th:each="question : ${questions}" th:if="${question.courseName.equals(course)}" class="card">
+    <div
+      th:each="question : ${questions}"
+      th:if="${question.course.equals(course)}"
+      class="card"
+    >
       <!-- Card header -->
-      <div class="card-header" data-toggle="collapse" th:attr="data-target=${'.collapse-' + question.id}">
-        <h5 th:utext="${'Question #' + question.id + ': ' + question.title}" class="mb-0 btn btn-link" />
-        <button th:class="${'btn btn-danger float-right collapse collapse-' + question.id}" th:attr="data-parent=${'#question-list-' + row.index}" type="button">Remove</button>
-        <button th:class="${'btn btn-primary float-right mr-2 collapse collapse-' + question.id}" th:attr="data-parent=${'#question-list-' + row.index}" type="button">Edit</button>
+      <div
+        class="card-header"
+        data-toggle="collapse"
+        th:attr="data-target=${'.collapse-' + question.id}"
+      >
+        <h5
+          th:utext="${'Question #' + question.id + ': ' + question.title}"
+          class="mb-0 btn btn-link"
+         />
+        <button
+          th:class="${'btn btn-danger float-right collapse collapse-' + question.id}"
+          th:attr="data-parent=${'#question-list-' + row.index}"
+          type="button"
+        >
+          Remove
+        </button>
+        <button
+          th:text="Edit"
+          th:class="${'btn btn-primary float-right mr-2 collapse collapse-' + question.id}"
+          th:attr="data-parent=${'#question-list-' + row.index}"
+          type="button"
+          th:onclick="|window.location = '/question/edit/${question.id}'|"
+       />
       </div>
 
       <!-- Collapsible part -->

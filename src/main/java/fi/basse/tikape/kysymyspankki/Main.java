@@ -17,8 +17,11 @@ public class Main {
         
     // Routes
     get("/", QuestionController::listQuestions);
-    get("/add", QuestionController::formNew);
-    post("/add", QuestionController::saveQuestion);
+    
+    get("/question/add", QuestionController::formNew);
+    post("/question/add", QuestionController::saveQuestion);
+    
+    get("/question/edit/:id", QuestionController::formEdit);
     
     // Error handling
     notFound(ExceptionController::notFound);

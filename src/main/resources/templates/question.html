@@ -1,0 +1,187 @@
+<h3
+  th:utext="${edit ? 'Edit Question' : 'Add New Question'}"
+  class="mb-5"
+/>
+
+<div th:if="${message.error}" class="alert alert-danger inline-alert">
+  <h5>Error!</h5>
+  <p th:utext="${message.error}" class="mb-0" />
+</div>
+
+<form action="/question/add" method="POST">
+  <div class="form-group">
+    <label for="title">
+      Title
+    </label>
+    <input
+      th:value="${data.title}"
+      th:classappend="${validation.size() > 0 && !validation.title ? 'is-invalid' : null}"
+      type="text"
+      class="form-control shadow-sm"
+      id="title"
+      name="title"
+      placeholder="General subject area of the question..."
+    />
+  </div>
+  
+  <div class="form-group">
+    <label for="body">
+      Question
+    </label>
+    <input
+      th:value="${data.body}"
+      th:classappend="${validation.size() > 0 && !validation.body ? 'is-invalid' : null}"
+      type="text"
+      class="form-control shadow-sm"
+      id="body"
+      name="body"
+      placeholder="Question text..."
+    />
+  </div>
+  
+  <div class="form-row">
+    <div class="form-group col">
+      <label for="course">
+        Select an existing course...
+      </label>
+      <select
+        th:classappend="${validation.size() > 0 && !validation.course ? 'is-invalid' : null}"
+        class="form-control shadow-sm"
+        id="course"
+        name="course"
+      >
+        <option
+          th:selected="${!data.course}"
+          value=""
+          disabled
+        >
+          Select Course
+        </option>
+        <option
+          th:each="course : ${courses}"
+          th:value="${course}"
+          th:utext="${course}"
+          th:selected="${course.equals(data.course)}"
+        />
+      </select>
+    </div>
+
+    <div class="form-group col">
+      <label for="newCourse">
+        ...or create a new one
+      </label>
+      <input
+        th:value="${edit ? null : data.newCourse}"
+        th:classappend="${validation.size() > 0 && !validation.course ? 'is-invalid' : null}"
+        type="text"
+        class="form-control shadow-sm"
+        id="newCourse"
+        name="newCourse"
+        placeholder="Course Name"
+      />
+      <small class="form-text text-muted">
+        This field will take precedence if both are filled.
+      </small>
+    </div>
+  </div>
+  
+  <!--/* Correct answer field displayed only when creating a new question */-->
+  <div th:if="${!edit}" class="form-group">
+    <label for="answer">
+      Correct Answer
+    </label>
+    <input
+      th:value="${data.answer}"
+      th:classappend="${validation.size() > 0 && !validation.answer ? 'is-invalid' : null}"
+      type="text"
+      class="form-control shadow-sm"
+      id="answer"
+      name="answer"
+      placeholder="Give the correct answer to the question, other options are added after creation..."
+    />
+  </div>
+  
+  <!--/* Submit button */-->
+  <div
+    th:classappend="${edit ? 'mt-2' : 'mt-5'}"
+    class="form-group"
+  >
+    <input
+      th:value="${edit ? 'Save' : 'Create'}"
+      type="submit"
+      class="btn btn-primary shadow-sm"
+    />
+  </div>
+</form>
+  
+<!--/* When editing, show all answer options  */-->
+<div th:if="${edit}">
+  <h4 class="pt-4 mb-4">
+    Answer Options
+  </h4>
+
+  <p>
+    Click an answer option to edit or remove it.
+  </p>
+
+  <div class="list-group">
+    <a
+      th:each="ao : ${data.answerOptions}"
+      th:href="|/answeroption/edit/${ao.id}|"
+      class="list-group-item list-group-item-action"
+    >
+      <span th:text="${ao.correct ? '(True)' : '(False)'}" class="ao-truth pr-2" />
+      <span th:text="${ao.body}" />
+    </a>
+    </div>
+  </div>
+
+  <!--/* Add new answer option */-->
+  <h4 class="pt-5 mb-4">
+    Add New Answer Option
+  </h4>
+  
+  <form action="/answeroption/add" method="POST">
+    <div class="form-group">
+      <input
+        th:classappend="${validation.size() > 0 && !validation.answer ? 'is-invalid' : null}"
+        type="text"
+        class="form-control shadow-sm"
+        id="answer"
+        name="answer"
+        placeholder="Enter an answer option and select the truth value below..."
+      />
+    </div>
+    
+    <div class="form-check form-check-inline">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="correct"
+        id="correct-true"
+        value="true"
+      >
+      <label class="form-check-label" for="correct-true">True</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="correct"
+        id="correct-false"
+        value="false"
+      >
+      <label class="form-check-label" for="correct-false">False</label>
+    </div>
+    
+    <div
+      class="form-group mt-3"
+    >
+      <input
+        value="Add"
+        type="submit"
+        class="btn btn-primary shadow-sm"
+      />
+    </div>
+  </form>
+</div>

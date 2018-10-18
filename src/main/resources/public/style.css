@@ -22,3 +22,8 @@ footer {
   margin-right: auto;
   width: 60%;
 }
+
+.ao-truth {
+  font-style: italic;
+  font-weight: bold;
+}

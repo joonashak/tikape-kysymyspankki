@@ -15,6 +15,40 @@ public class QuestionDao extends Dao {
     super(db);
   }
   
+  public Question findOne(int id) throws SQLException {
+    Connection conn = super.getConnection();
+    
+    String sql = "SELECT Question.*, AnswerOption.id AS answeroption_id, Answeroption.body AS answeroption_body, AnswerOption.correct FROM Question LEFT JOIN AnswerOption ON AnswerOption.question_id = Question.id WHERE Question.id = ?";
+    PreparedStatement stmt = conn.prepareStatement(sql);
+    stmt.setInt(1, id);
+    ResultSet rs = stmt.executeQuery();
+    
+    // Build result
+    Question question = null;
+    
+    while (rs.next()) {
+      // Creeate question if not exist
+      if (question == null) {
+        question = new Question(
+          id,
+          rs.getString("courseName"),
+          rs.getString("title"), 
+          rs.getString("body")
+        );
+      }
+      
+      // Add answer option
+      question.addAnswerOption(new AnswerOption(
+        rs.getInt("answeroption_id"),
+        rs.getString("answeroption_body"),
+        rs.getBoolean("correct")
+      ));
+    }
+    
+    super.close(rs, stmt);
+    return question;
+  }
+  
   public List<Question> findAll() throws SQLException {
     Connection conn = super.getConnection();
     
@@ -29,27 +63,27 @@ public class QuestionDao extends Dao {
       Integer id = rs.getInt("id");
       
       Question question = questions.stream()
-              .filter(q -> q.getId() == id)
-              .findFirst()
-              .orElse(null);
+        .filter(q -> q.getId() == id)
+        .findFirst()
+        .orElse(null);
       
-      // Creeate question if not exist
+      // Create question if not exist
       if (question == null) {
         question = new Question(
-                id,
-                rs.getString("courseName"),
-                rs.getString("title"), 
-                rs.getString("body")
-          );
+          id,
+          rs.getString("courseName"),
+          rs.getString("title"), 
+          rs.getString("body")
+        );
         questions.add(question);
       }
       
       // Add answer option
       question.addAnswerOption(new AnswerOption(
-              rs.getInt("answeroption_id"),
-              rs.getString("answeroption_body"),
-              rs.getBoolean("correct")
-        ));
+        rs.getInt("answeroption_id"),
+        rs.getString("answeroption_body"),
+        rs.getBoolean("correct")
+      ));
     }
     
     super.close(rs, stmt);
@@ -83,7 +117,7 @@ public class QuestionDao extends Dao {
     Connection conn = super.getConnection();
     String sql = "INSERT INTO Question (coursename, title, body) VALUES (?,?,?) RETURNING id";
     PreparedStatement stmt = conn.prepareStatement(sql);
-    stmt.setString(1, question.getCourseName());
+    stmt.setString(1, question.getCourse());
     stmt.setString(2, question.getTitle());
     stmt.setString(3, question.getBody());
 
