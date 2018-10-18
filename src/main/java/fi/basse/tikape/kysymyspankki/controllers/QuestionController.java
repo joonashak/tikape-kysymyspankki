@@ -157,4 +157,28 @@ public class QuestionController {
       
       return listQuestions(req, res, model);
     }
+    
+    // Show confirmation prompt for removing a question
+    public static String confirmRemove(Request req, Response res) {
+      HashMap model = new HashMap();
+      model.put("id", req.params("id"));
+      
+      return render("remove", model);
+    }
+    
+    // Remove a question
+    public static String removeQuestion(Request req, Response res) throws SQLException {
+      Database db = new Database();
+      QuestionDao questionDao = new QuestionDao(db);
+      
+      int id = Integer.parseInt(req.params("id"));
+      questionDao.delete(id);
+      
+      HashMap model = new HashMap();
+      HashMap message = new HashMap();
+      message.put("success", "Question #" + id + " was removed.");
+      model.put("message", message);
+      
+      return listQuestions(req, res, model);
+    }
 }

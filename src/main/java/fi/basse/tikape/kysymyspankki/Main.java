@@ -24,6 +24,9 @@ public class Main {
     get("/question/edit/:id", QuestionController::formEdit);
     post("/question/edit", QuestionController::updateQuestion);
     
+    get("/question/remove/:id", QuestionController::confirmRemove);
+    post("/question/remove/:id", QuestionController::removeQuestion);
+    
     // Error handling
     notFound(ExceptionController::notFound);
     internalServerError(ExceptionController::internalServerError);

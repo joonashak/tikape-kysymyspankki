@@ -143,4 +143,14 @@ public class QuestionDao extends Dao {
     
     stmt.executeUpdate();
   }
+  
+  // Remove question
+  public void delete(int id) throws SQLException {
+    Connection conn = super.getConnection();
+    String sql = "DELETE FROM Question WHERE id = ?";
+    PreparedStatement stmt = conn.prepareStatement(sql);
+    stmt.setInt(1, id);
+    
+    stmt.executeUpdate();
+  }
 }

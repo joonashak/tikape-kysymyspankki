@@ -1,0 +1,17 @@
+<h3>
+  Remove Question?
+</h3>
+
+<p>
+  Are you sure you want to remove Question #<span th:text="${id}" />?
+</p>
+
+<form th:action="|/question/remove/${id}|" method="POST">
+  <div class="form-group">
+    <input
+      type="submit"
+      value="Yes, remove this question."
+      class="btn btn-outline-danger shadow-sm"
+    />
+  </div>
+</form>
