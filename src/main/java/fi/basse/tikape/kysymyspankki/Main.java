@@ -1,5 +1,6 @@
 package fi.basse.tikape.kysymyspankki;
 
+import fi.basse.tikape.kysymyspankki.controllers.AnswerOptionController;
 import fi.basse.tikape.kysymyspankki.controllers.ExceptionController;
 import fi.basse.tikape.kysymyspankki.controllers.QuestionController;
 import static spark.Spark.get;
@@ -26,6 +27,8 @@ public class Main {
     
     get("/question/remove/:id", QuestionController::confirmRemove);
     post("/question/remove/:id", QuestionController::removeQuestion);
+    
+    post("/answeroption/add", AnswerOptionController::saveAnswerOption);
     
     // Error handling
     notFound(ExceptionController::notFound);

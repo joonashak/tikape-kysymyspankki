@@ -148,6 +148,7 @@
     <div class="form-group">
       <input
         th:classappend="${validation.size() > 0 && !validation.answer ? 'is-invalid' : null}"
+        th:value="${answer ? answer.answer : null}"
         type="text"
         class="form-control shadow-sm"
         id="answer"
@@ -158,6 +159,7 @@
     
     <div class="form-check form-check-inline">
       <input
+        th:classappend="${validation.size() > 0 && !validation.correct ? 'is-invalid' : null}"
         class="form-check-input"
         type="radio"
         name="correct"
@@ -168,6 +170,7 @@
     </div>
     <div class="form-check form-check-inline">
       <input
+        th:classappend="${validation.size() > 0 && !validation.correct ? 'is-invalid' : null}"
         class="form-check-input"
         type="radio"
         name="correct"
@@ -185,6 +188,8 @@
         type="submit"
         class="btn btn-primary shadow-sm"
       />
+      <!--/* Question ID */-->
+      <input type="hidden" name="questionId" th:value="${data.id}" />
     </div>
   </form>
 </div>

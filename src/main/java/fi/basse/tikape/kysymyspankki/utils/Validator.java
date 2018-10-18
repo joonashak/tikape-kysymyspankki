@@ -12,6 +12,11 @@ public class Validator {
       String key = entry.getKey();
       String value = entry.getValue();
       
+      if (value == null) {
+        results.put(key, false);
+        continue;
+      }
+      
       results.put(key, !value.trim().equals(""));
     }
     
