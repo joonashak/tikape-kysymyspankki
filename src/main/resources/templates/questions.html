@@ -25,7 +25,7 @@
         th:attr="data-target=${'.collapse-' + question.id}"
       >
         <h5
-          th:utext="${'Question #' + question.id + ': ' + question.title}"
+          th:text="${'Question #' + question.id + ': ' + question.title}"
           class="mb-0 btn btn-link"
          />
         <button
@@ -47,9 +47,9 @@
       <!-- Collapsible part -->
       <div th:class="${'collapse collapse-' + question.id}" th:attr="data-parent=${'#question-list-' + row.index}">
         <div class="card-body ml-4">
-          <p th:utext="${question.body}" />
+          <p th:text="${question.body}" />
           <ul class="mb-0">
-            <li th:each="ao : ${question.answerOptions}" th:utext="${ao.body}" />
+            <li th:each="ao : ${question.answerOptions}" th:text="${ao.body}" />
           </ul>
         </div>
       </div>

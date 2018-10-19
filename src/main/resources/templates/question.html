@@ -1,11 +1,11 @@
 <h3
-  th:utext="${edit ? 'Edit Question' : 'Add New Question'}"
+  th:text="${edit ? 'Edit Question' : 'Add New Question'}"
   class="mb-5"
 />
 
 <div th:if="${message.error}" class="alert alert-danger inline-alert shadow-sm">
   <h5>Error!</h5>
-  <p th:utext="${message.error}" class="mb-0" />
+  <p th:text="${message.error}" class="mb-0" />
 </div>
 
 <form th:action="${edit ? '/question/edit' : '/question/add'}" method="POST">
@@ -60,7 +60,7 @@
         <option
           th:each="course : ${courses}"
           th:value="${course}"
-          th:utext="${course}"
+          th:text="${course}"
           th:selected="${course.equals(data.course)}"
         />
       </select>
@@ -128,15 +128,30 @@
   </p>
 
   <div class="list-group">
-    <a
+    <li
       th:each="ao : ${answerOptions}"
-      th:href="|/answeroption/edit/${ao.id}|"
       class="list-group-item list-group-item-action"
+      th:onclick="|window.location = '/answeroption/edit/${ao.id}'|"
     >
-      <span th:text="${ao.correct ? '(True)' : '(False)'}" class="ao-truth pr-2" />
-      <span th:text="${ao.body}" />
-    </a>
-    </div>
+      <div class="row">
+        <div class="col-1">
+          <div
+            th:text="${ao.correct ? 'True' : 'False'}"
+            class="badge badge-pill"
+            th:classappend="${ao.correct ? 'badge-success' : 'badge-danger'}"
+          />
+        </div>
+        <div th:text="${ao.body}" class="col" />
+        <div class="col-auto">
+          <button
+            type="button"
+            class="btn btn-danger btn-outline-danger btn-sm float-right"
+            th:text="Remove"
+            th:onclick="|event.stopPropagation(); window.location = '/answeroption/remove/${ao.id}'|"
+          />
+        </div>
+      </div>
+    </li>
   </div>
 
   <!--/* Add new answer option */-->
