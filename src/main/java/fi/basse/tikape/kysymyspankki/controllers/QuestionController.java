@@ -88,18 +88,24 @@ public class QuestionController {
   }
 
   // Form to edit question and answer options
-  public static String formEdit(Request req, Response res) throws SQLException {
+  public static String formEdit(Request req, Response res, Map model, int id) throws SQLException {
     Database db = new Database();
     QuestionDao questionDao = new QuestionDao(db);
 
-    HashMap model = new HashMap();
-    Question question = questionDao.findOne(Integer.parseInt(req.params("id")));
+    Question question = questionDao.findOne(id);
     model.put("data", question);
     model.put("answerOptions", question.getAnswerOptions());
     model.put("courses", questionDao.getCourses());
     model.put("edit", true);
 
     return render("question", model);
+  }
+  
+  // Interface for Spark
+  public static String formEdit(Request req, Response res) throws SQLException {
+    HashMap model = new HashMap();
+    int id = Integer.parseInt(req.params("id"));
+    return formEdit(req, res, model, id);
   }
 
   public static String updateQuestion(Request req, Response res) throws SQLException {

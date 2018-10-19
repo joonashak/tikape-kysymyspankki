@@ -30,6 +30,9 @@ public class Main {
     
     post("/answeroption/add", AnswerOptionController::saveAnswerOption);
     
+    get("/answeroption/remove/:id", AnswerOptionController::confirmRemove);
+    post("/answeroption/remove/:id", AnswerOptionController::removeAnswerOption);
+    
     // Error handling
     notFound(ExceptionController::notFound);
     internalServerError(ExceptionController::internalServerError);

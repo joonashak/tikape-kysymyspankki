@@ -1,16 +1,19 @@
-<h3>
-  Remove Question?
-</h3>
+<h3 th:text="|Remove ${answerOption ? 'Answer Option' : 'Question'}?|" />
 
-<p>
-  Are you sure you want to remove Question #<span th:text="${id}" />?
+<p class="mt-5 mb-4">
+  Are you sure you want to remove
+  <span th:text="${answerOption ? 'Answer Option' : 'Question'}" />
+  #<span th:text="${id}" />?
 </p>
 
-<form th:action="|/question/remove/${id}|" method="POST">
+<form
+  th:action="|/${answerOption ? 'answeroption' : 'question'}/remove/${id}|"
+  method="POST"
+>
   <div class="form-group">
     <input
       type="submit"
-      value="Yes, remove this question."
+      value="Yes, remove this item."
       class="btn btn-outline-danger shadow-sm"
     />
   </div>

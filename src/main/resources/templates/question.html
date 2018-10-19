@@ -8,6 +8,11 @@
   <p th:text="${message.error}" class="mb-0" />
 </div>
 
+<div th:if="${message.success}" class="alert alert-success inline-alert shadow-sm">
+  <h5>Success!</h5>
+  <p th:utext="${message.success}" class="mb-0" />
+</div>
+
 <form th:action="${edit ? '/question/edit' : '/question/add'}" method="POST">
   <div class="form-group">
     <label for="title">
@@ -123,21 +128,16 @@
     Answer Options
   </h4>
 
-  <p>
-    Click an answer option to edit or remove it.
-  </p>
-
-  <div class="list-group">
+  <div class="list-group shadow-sm">
     <li
       th:each="ao : ${answerOptions}"
       class="list-group-item list-group-item-action"
-      th:onclick="|window.location = '/answeroption/edit/${ao.id}'|"
     >
       <div class="row">
         <div class="col-1">
           <div
             th:text="${ao.correct ? 'True' : 'False'}"
-            class="badge badge-pill"
+            class="badge badge-pill shadow-sm"
             th:classappend="${ao.correct ? 'badge-success' : 'badge-danger'}"
           />
         </div>

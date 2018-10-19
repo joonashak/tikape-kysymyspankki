@@ -33,14 +33,14 @@
           th:class="${'btn btn-danger float-right collapse collapse-' + question.id}"
           th:attr="data-parent=${'#question-list-' + row.index}"
           type="button"
-          th:onclick="|window.location = '/question/remove/${question.id}'|"
+          th:onclick="|event.stopPropagation(); window.location = '/question/remove/${question.id}'|"
         />
         <button
           th:text="Edit"
           th:class="${'btn btn-primary float-right mr-2 collapse collapse-' + question.id}"
           th:attr="data-parent=${'#question-list-' + row.index}"
           type="button"
-          th:onclick="|window.location = '/question/edit/${question.id}'|"
+          th:onclick="|event.stopPropagation(); window.location = '/question/edit/${question.id}'|"
        />
       </div>
 

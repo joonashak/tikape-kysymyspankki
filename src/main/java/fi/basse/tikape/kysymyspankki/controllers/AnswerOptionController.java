@@ -1,5 +1,6 @@
 package fi.basse.tikape.kysymyspankki.controllers;
 
+import static fi.basse.tikape.kysymyspankki.controllers.QuestionController.listQuestions;
 import fi.basse.tikape.kysymyspankki.database.AnswerOptionDao;
 import fi.basse.tikape.kysymyspankki.database.Database;
 import fi.basse.tikape.kysymyspankki.database.QuestionDao;
@@ -62,4 +63,36 @@ public class AnswerOptionController {
     
     return render("question", model);
   }
+  
+  // Show confirmation prompt for removing an answer option
+  public static String confirmRemove(Request req, Response res) {
+    HashMap model = new HashMap();
+    model.put("id", req.params("id"));
+    model.put("answerOption", true);
+
+    return render("remove", model);
+  }
+
+  // Remove an answer option
+  public static String removeAnswerOption(Request req, Response res) throws SQLException {
+    Database db = new Database();
+    AnswerOptionDao aoDao = new AnswerOptionDao(db);
+
+    int aoId = Integer.parseInt(req.params("id"));
+    int questionId = aoDao.findQuestionId(aoId);
+
+    HashMap model = new HashMap();
+    HashMap message = new HashMap();
+    
+    if (aoDao.canRemove(aoId)) {
+      aoDao.delete(aoId);
+      message.put("success", "Answer option #" + aoId + " was removed.");
+    } else {
+      message.put("error", "You cannot remove the last correct answer. Please add another one first.");
+    }
+    
+    model.put("message", message);
+
+    return QuestionController.formEdit(req, res, model, questionId);
+  }  
 }
