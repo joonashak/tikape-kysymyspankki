@@ -84,7 +84,12 @@ public class QuestionController {
     question.addAnswerOption(new AnswerOption(0, data.get("answer"), true));
     questionDao.save(question);
 
-    return null;
+    HashMap model = new HashMap();
+    HashMap message = new HashMap();
+    message.put("success", "New question added!");
+    model.put("message", message);
+    
+    return listQuestions(req, res, model);
   }
 
   // Form to edit question and answer options
